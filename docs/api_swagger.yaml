@@ -1,0 +1,1152 @@
+openapi: 3.0.3
+info:
+  title: Projeto monitoramento em transporte de pets - OpenAPI 3.0
+  description: |-
+      Esta é a documentação da API para comunicação com o backend do projeto
+      
+      **Esta API requer autenticação com JWT**
+      
+
+       
+  version: v1
+servers:
+  - url: http://localhost/v1/
+  
+tags:
+  - name: pet
+    description: API para lidar com os dados dos pets
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: user
+    description: Lidar com os usuários da aplicacao
+    
+  - name: caixas
+    description: Cadastro das caixas transportadoras
+    
+  - name: Viagens
+    description: Gerencia as viagens
+    
+  - name: Leituras
+    description: Gerencia as leituras realizadas na caixa
+  
+  
+    
+paths:
+  /caixa:
+    post:
+      tags:
+        - caixas
+      summary: Cadastra uma caixa
+      description: Realiza o cadastro da caixa para o usuário autenticado
+
+      requestBody:
+        description: Cadastra um objeto caixa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Caixa'
+        required: true
+      responses:
+        '201':
+          description: Cadastradado com sucesso
+          
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+      - caixas
+      summary: Recupera todas as caixas
+      description: Recupera todas as caixas
+      responses:
+        '200':
+            $ref: '#/components/responses/CaixaArray'
+                
+  /caixa/{caixa-id}:      
+    put:
+      tags:
+        - caixas
+      summary: Atualiza uma caixa
+      description: Realiza a atualização de uma caixa
+      
+      parameters:
+        - name: caixa-id
+          in: path
+          description: ID da caixa
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cadastra um objeto caixa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Caixa'
+        required: true
+        
+      responses:
+        '201':
+          description: Atualizado com sucesso
+
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      security:
+        - bearerAuth: []
+        
+    delete:
+      tags:
+        - caixas
+      summary: Apaga uma caixa
+      description: Apaga a caixa
+      parameters:
+        - name: caixa-id
+          in: path
+          description: ID da caixa
+          required: true
+          schema:
+            type: string
+            
+      responses:
+        '200':
+          description: Removido com sucesso
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError' 
+      security:
+        - bearerAuth: []
+        
+    get:
+      tags:
+      - caixas
+      summary: Recupera uma caixa
+      description: Recupera uma caixa
+      parameters:
+        - name: caixa-id
+          in: path
+          description: ID da caixa
+          required: true
+          schema:
+            type: string
+            
+      responses:
+        '200':
+          description: Recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Caixa'
+                
+                
+  /caixa/link/{caixa-id}:
+    post:
+      tags:
+        - caixas
+      summary: Altera o usuário dono da caixa
+      description: "Altera o usuário dono do objeto caixa indicado no parametro **caixa-id**"
+      parameters:
+        - name: caixa-id
+          in: path
+          description: ID da caixa
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cadastra um novo dono para a caixa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaixaLink'
+        required: true
+      responses:
+        '201':
+          description: Cadastradado com sucesso
+        '401':
+          $ref: '#/components/responses/UnauthorizedError' 
+      security:
+        - bearerAuth: []  
+        
+  /caixaModel:
+    post:
+      tags:
+        - modelo caixa
+      summary: Cadastra um modelo de caixa
+      description: Realiza o cadastro de um modelo de caixa
+
+      requestBody:
+        description: Cadastra um objeto modelo de caixa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaixaModel'
+        required: true
+      responses:
+        '201':
+          description: Cadastradado com sucesso
+          
+      security:
+        - bearerAuth: []
+        
+        
+  /caixaModel/{caixaId}:
+    get:
+      tags:
+        - modelo caixa
+      summary: Recupera o modelo de caixa
+      description: Recupera os dados do modelo de caixa
+      operationId: getModelBox
+      parameters:
+        - name: caixaId
+          in: path
+          description: ID do modelo de caixa
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaixaModelGET'          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError' 
+    delete:
+      tags:
+        - modelo caixa
+      summary: Remove o modelo de caixa
+      description: Remove os dados do modelo de caixa
+      operationId: delModelBox
+      parameters:
+        - name: caixaId
+          in: path
+          description: ID do modelo de caixa
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Removido com sucesso
+                
+        '401':
+          $ref: '#/components/responses/UnauthorizedError' 
+          
+        '404':
+          description: Objeto não encontrado
+    
+    put:
+      tags:
+        - modelo caixa
+      summary: Atualiza o modelo de caixa
+      description: Atualiza os dados do modelo de caixa
+      operationId: updateModelBox
+      parameters:
+        - name: caixaId
+          in: path
+          description: ID do modelo de caixa
+          required: true
+          schema:
+            type: string
+      
+      requestBody:
+        description: Atualiza um objeto modelo de caixa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaixaModel'
+        required: true
+      responses:
+        '201':
+          description: Atualizado com sucesso
+        '401':
+          $ref: '#/components/responses/UnauthorizedError' 
+          
+        '404':
+          description: Objeto não encontrado  
+    
+    
+  /pet:
+
+    post:
+      tags:
+        - pet
+      summary: Cadastrar novo pet
+      description: Adciona um novo pet ao sistema e associa ao usuário atual
+      operationId: addPet
+      requestBody:
+        description: Cria um novo pet
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Criado com sucesso
+
+      security:
+        - bearerAuth: []
+        
+  /pet/link/{petId}:
+    post:
+      tags:
+        - pet
+      summary: Associa pet á um novo dono
+      description: Faz a associação entre pet e usuário
+      parameters:
+        - name: petId
+          in: path
+          description: ID do pet
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetLink'
+      responses:
+        '200':
+          description: Criado com sucesso
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '405':
+          description: Entrada inválida
+          
+      security:
+        - bearerAuth: []
+
+  /pet/{petId}:
+    get:
+      tags:
+        - pet
+      summary: Recupera um pet
+      description: Retorna um animal
+      operationId: getPetById
+      parameters:
+        - name: petId
+          in: path
+          description: ID do 
+          
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetGET'          
+
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+        
+    put:
+      tags:
+        - pet
+      summary: Atualiza os dados do pet
+      description: ''
+      operationId: updatePetWithForm
+      parameters:
+        - name: petId
+          in: path
+          description: ID do pet que deseja-se atualizar
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Atualiza os dados de um pet existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '201':
+          description: Atualizado com sucesso
+        '405':
+          description: Entrada Invalida
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+        
+    delete:
+      tags:
+        - pet
+      summary: Remover pet indicado
+      description: Remove o registro do pet
+      operationId: deletePet
+      parameters:
+        
+        - name: petId
+          in: path
+          description: Id do pet a ser removido
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Pet não encontrado
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+        
+            
+            
+ 
+  /user:
+    post:
+      tags:
+        - user
+      summary: Cadastra usuário
+      description: Realiza o cadastro dos novos usuários
+      operationId: createUser
+      requestBody:
+        description: Objeto usuário
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        
+      responses:
+        default:
+          description: Cadastrado com sucesso
+
+  
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Realiza login do usuário
+      description: ''
+      operationId: loginUser
+      requestBody:
+        description: Credenciais de login
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Sucesso ao logar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+        '400':
+          description: Usuário ou senha inválidos
+          
+          
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Efetuar logout
+      description: ''
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: Desconectado com sucesso
+          
+      security:
+        - bearerAuth: []    
+          
+  /user/{userid}:
+    get:
+      tags:
+        - user
+      summary: Recupera os dados do usuário com o id indicado
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: userid
+          in: path
+          description: 'Id do usuário desejado'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGET'          
+
+        '404':
+          description: Userario não encontrado
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+        
+    put:
+      tags:
+        - user
+      summary: Atualizar usuário
+      description: Atualiza os dados do usuário indicado
+      operationId: updateUser
+      parameters:
+        - name: userid
+          in: path
+          description: Id do usuário a ser modificado
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Atualiza um usuário existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+      responses:
+        default:
+          description: Atualizado com sucesso
+          
+      security:
+        - bearerAuth: []
+          
+    delete:
+      tags:
+        - user
+      summary: Remove um usuário
+      description: Remove o usuário com id indicado
+      operationId: deleteUser
+      parameters:
+        - name: userid
+          in: path
+          description: Id do usuário
+          required: true
+          schema:
+            type: string
+      responses:
+        '404':
+          description: Usuário não encontrado
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []  
+        
+  /trip:
+    post:
+      tags:
+        - Viagens
+      summary: Cadastra uma viagem para o usuário autenticado
+      requestBody:
+        description: Cadastrar Viagem
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Viagem'
+      responses:
+        '201':
+          description: Cadastrado com sucesso
+
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Viagens
+      summary: Busca todas as viagens do usuário
+      
+      responses:
+        '200':
+            $ref: '#/components/responses/ViagemArray'          
+
+        '404':
+          description: Userario não encontrado
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+    
+  /trip/{tripId}:
+    get:
+      tags:
+        - Viagens
+      summary: Busca a viagem selecionada
+      parameters:
+        - name: tripId
+          in: path
+          description: Id da viagem
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViagemGET'
+                
+        '404':
+          description: Viagem não encontrada
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Viagens
+      summary: Apaga a viagem selecionada
+      parameters:
+        - name: tripId
+          in: path
+          description: Id da viagem
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Removido com sucesso
+
+        '404':
+          description: Viagem não encontrada
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+                  
+    put:
+      tags:
+        - Viagens
+      summary: Atualiza a viagem desejada
+      parameters:
+        - name: tripId
+          in: path
+          description: Id da viagem
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Atualizar viagem
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Viagem'
+      responses:
+        '201':
+          description: Cadastrado com sucesso
+
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: [] 
+ 
+  /measure/{tripId}:
+    post:
+      tags:
+        - Leituras
+      summary: Cadastra uma leitura para a viagem indicada em **tripId**
+      parameters:
+        - name: tripId
+          in: path
+          description: Id da viagem
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cadastrar Viagem
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Leitura'
+      responses:
+        '201':
+          description: Cadastrado com sucesso
+
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Leituras
+      summary: Busca todas as leituras da viagem selecionada
+      parameters:
+        - name: tripId
+          in: path
+          description: Id da viagem
+          required: true
+          schema:
+            type: string      
+      responses:
+        '200':
+            $ref: '#/components/responses/LeituraArray'          
+
+        '404':
+          description: Leituras não encontradas
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+      security:
+        - bearerAuth: []
+    
+  /measure/{measureId}:
+    get:
+      tags:
+        - Leituras
+      summary: Busca a leitura selecionada
+      parameters:
+        - name: measureId
+          in: path
+          description: Id da leitura
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeituraGET'
+                
+        '404':
+          description: Leitura não encontrada
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Viagens
+      summary: Apaga a viagem selecionada
+      parameters:
+        - name: measureId
+          in: path
+          description: Id da leitura
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Removido com sucesso
+
+        '404':
+          description: Leitura não encontrada
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+                  
+  
+        
+components:
+  schemas:
+    Caixa:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: "Caixa 1"
+        idModelo:
+          type: string
+          example: "3314de3d-6186-4526-a475-d21aac9f77c5"
+    CaixaGET:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "3314de3d-6186-4526-a475-d21aac9f77c5"
+        nome:
+          type: string
+          example: "Caixa 1"
+        idModelo:
+          type: string
+          example: "3314de3d-6186-4526-a475-d21aac9f77c5"
+    CaixaModel:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: "Caixa Maravilha XPTO"
+        altura:
+          type: number
+          example: 12.5
+        largura:
+          type: number
+          example: 30.5   
+    CaixaModelGET:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "3314de3d-6186-4526-a475-d21aac9f77c5"
+        nome:
+          type: string
+          example: "Caixa Maravilha XPTO"
+        altura:
+          type: number
+          example: 12.5
+        largura:
+          type: number
+          example: 30.5         
+    CaixaLink:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "3314de3d-6186-4526-a475-d21aac9f77c5"
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        petId:
+          type: integer
+          format: int64
+          example: 198772
+        quantity:
+          type: integer
+          format: int32
+          example: 7
+        shipDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Order Status
+          example: approved
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          type: boolean
+      xml:
+        name: order
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 100000
+        username:
+          type: string
+          example: fehguy
+        address:
+          type: array
+          xml:
+            name: addresses
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Address'
+      xml:
+        name: customer
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          example: 437 Lytton
+        city:
+          type: string
+          example: Palo Alto
+        state:
+          type: string
+          example: CA
+        zip:
+          type: string
+          example: '94301'
+      xml:
+        name: address
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Dogs
+      xml:
+        name: category
+        
+    UserToken:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: juca@juca.com.br
+        senha:
+          type: string
+          example: "senha"
+    User:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Juca
+        documento:
+          type: string
+          example: '11.208.655.95'
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+    UserGET:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 90fce5c3-22a7-4b4f-822f-1bb34a36c75d
+        nome:
+          type: string
+          example: Juca
+        documento:
+          type: string
+          example: '11.208.655.95'
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: tag
+    Pet:
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          example: 90fce5c3-22a7-4b4f-822f-1bb34a36c75d
+        name:
+          type: string
+          example: doggie
+        breed:
+          type: string
+          example: Caramelo
+        category:
+          type: string
+          example: Medio Porte
+    PetGET:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: doggie
+        breed:
+          type: string
+          example: Caramelo
+        category:
+          type: string
+          example: Medio Porte
+    PetLink:
+      required:
+      - userId
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 7dbb95a2-3489-11ed-a261-0242ac120002
+    Viagem:
+      type: object
+      properties:
+        petId:
+          type: string
+          example: 7dbb95a2-3489-11ed-a261-0242ac120002
+        caixaID: 
+          type: string
+          example: 7dbb95a2-3489-11ed-a274-0242ac120002
+        date:
+          type: string
+          example: "2022-08-24 09:10:00"
+    ViagemGET:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 7dbb95a2-3489-11ed-a261-0242ac120002
+        petId:
+          type: string
+          example: 7dbb95a2-3489-11ed-a261-0242ac120002
+        caixaID: 
+          type: string
+          example: 7dbb95a2-3489-11ed-a274-0242ac120002
+        date:
+          type: string
+          example: "2022-08-24 09:10:00"
+    Leitura:
+      type: object
+      properties:
+        date:
+          type: string
+          example: "2022-08-15 17:15:32"
+        openDoor: 
+          type: boolean
+          example: false
+        petState:
+          type: string
+          example: "alive"
+        location:
+          type: object
+          properties:
+              latitude:
+                type: number
+                example: -23.477785
+              longitude:
+                type: number
+                example: -47.211156
+    LeituraGET:
+        type: object
+        properties:
+          id:
+            type: string
+            example: 7dbb95a2-3489-11ed-a261-0242ac120002
+          date:
+            type: string
+            example: "2022-08-15 17:15:32"
+          openDoor: 
+            type: boolean
+            example: false
+          petState:
+            type: string
+            example: "alive"
+          location:
+            type: object
+            properties:
+                latitude:
+                  type: number
+                  example: -23.477785
+                longitude:
+                  type: number
+                  example: -47.211156            
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  requestBodies:
+    Pet:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+            
+  responses:
+    UnauthorizedError:
+      description: Operação não autorizada, verifique suas permissões
+      
+    ViagemArray:
+      description: Lista de viagens
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ViagemGET'
+    CaixaArray:
+      description: Lista de Caixas
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CaixaGET'
+            
+    LeituraArray:
+      description: Lista de Leituras
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/LeituraGET'      
+      
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+      
