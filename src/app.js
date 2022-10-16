@@ -18,7 +18,11 @@ app.set('view engine', 'ejs');
 app.use(`/api/v${process.env.API_VERSION}/user`,userRoutes);
 app.use(`/api/v${process.env.API_VERSION}/feedback`,feedRoutes);
 
+app.use(express.static(__dirname + "/views"));
 
+app.get("/",(req,res)=>{
+    res.sendFile(__dirname +"/views/index.html");
+});
 
 app.use(errors());
 

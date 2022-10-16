@@ -31,7 +31,7 @@ async function getSingleUser(req,res,userId)
             func_id: userId
           }});
     
-        res.status(200).send({mUser});
+        res.status(200).send({user:mUser});
     }
     catch(err){
         res.status(500).send({status:`${err}`})
