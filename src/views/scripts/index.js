@@ -22,15 +22,38 @@ function deleteEmployee(id)
 
 function editEmployee(id)
 {
-    localStorage.clear();
+    sessionStorage.clear();
 
-    localStorage.setItem("edit-id",id);
-    localStorage.setItem("type", EMPLOYEE_TYPE);
-    localStorage.setItem("action","edit");
+    sessionStorage.setItem("edit-id",id);
+    sessionStorage.setItem("type", EMPLOYEE_TYPE);
+    sessionStorage.setItem("action","edit");
 
 
     location.href = "./form.html";
 }
+
+
+function showFeedBacks(id)
+{
+    sessionStorage.clear();
+    
+    sessionStorage.setItem("user-id",id);
+
+
+    location.href = "./feedbacks.html";
+}
+
+function registerEmployee()
+{
+    sessionStorage.clear();
+
+    sessionStorage.setItem("type", EMPLOYEE_TYPE);
+    sessionStorage.setItem("action","create");
+
+
+    location.href = "./form.html";
+}
+
 
 function createTable(data)
 {
@@ -47,6 +70,7 @@ function createTable(data)
 
         let btDel = document.createElement("button");
         let btEdit = document.createElement("button");
+        let btFeedbcaks = document.createElement("button");
 
         row.setAttribute("id",element.func_id);
         tdName.innerHTML = element.func_nome;
@@ -60,6 +84,8 @@ function createTable(data)
         btEdit.addEventListener("click",()=>editEmployee(element.func_id));
         tdActions.appendChild(btEdit);
 
+        btFeedbcaks.addEventListener("click",()=>showFeedBacks(element.func_id));
+        tdActions.appendChild(btFeedbcaks);
 
         row.appendChild(tdName);
         row.appendChild(tdTel);
@@ -74,5 +100,6 @@ function createTable(data)
     });
 }
 
+document.getElementById("bt-create").addEventListener("click",()=>registerEmployee());
 
 loadEmployees();
