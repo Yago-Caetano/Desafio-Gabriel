@@ -1,27 +1,20 @@
 const FeedbackModel = require('../models/feedbackModel')
 const FeedbackDAO = require('../DAO/feedbackModelDAO')
 const Cripto = require('../crypto/criptoService');
+const sequelize = require('../connection/database');
+const Uuid = require("../utils/UuidGenerator");
 
 async function insertFeedback(req,res,feedback)
 {
 
-    //hashSenha = await Cripto.generateHash(user.senha);
-
-    emp = FeedbackDAO.build({
-        feed_data: feedback.data,
-        feed_metas: feedback.goals,
-        feed_pontos_positivos: feedback.successes,
-        feed_pontos_negativos: feedback.mistakes
-    });
-
     try{
-        await emp.save();
-        /**
-         * @TODO Implementar SP
-         *  */         
+
+         await sequelize.query("CALL proc_add_feedback (:pfeed_id, :pfeed_data, :pfeed_metas, :pfeed_pontos_positivos, :pfeed_pontos_negativos, :p_func_id)",
+                            {replacements:{pfeed_id:Uuid.create_UUID(),pfeed_data:feedback.date,pfeed_metas:feedback.goals, pfeed_pontos_positivos: feedback.successes,pfeed_pontos_negativos: feedback.mistakes, p_func_id:feedback.user_id}})    
         res.status(201).send({status:"Cadastrado com sucesso"})
     }
     catch(err){
+        console.log(err);
         res.status(500).send({status:`${err}`})
     }
 }
@@ -60,16 +53,10 @@ async function getFeedBacks(req,res,userId)
 
 async function deleteFeedback(req,res,feedId)
 {
-    try{
-        /**
-         * @TODO Implementar SP
-         *  */         
-        await FeedbackDAO.destroy({
-            where: {
-                feed_id: feedId
-            }
-          });
-
+    try{  
+         await sequelize.query("CALL proc_remove_feedback_func (:pfeed_id)",
+         {replacements:{pfeed_id:feedId}});    
+        
         res.status(200).send({status:"Removido com sucesso"});
     }
     catch(err){

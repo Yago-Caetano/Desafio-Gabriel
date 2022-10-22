@@ -53,9 +53,10 @@ BEGIN
 END $$
 
 
-CREATE PROCEDURE proc_remove_feedback_func (IN p_func_id VARCHAR(40), IN pfeed_id VARCHAR(40))
+CREATE PROCEDURE proc_remove_feedback_func (IN pfeed_id VARCHAR(40))
 BEGIN
-	DELETE FROM tb_funcionario_x_feedback WHERE funcionario = p_func_id AND feedback = pfeed_id;
+	DELETE FROM tb_funcionario_x_feedback WHERE feedback = pfeed_id;
+    DELETE FROM tb_feedbacks WHERE feed_id = pfeed_id;
 END $$
 
 
@@ -64,3 +65,5 @@ BEGIN
 	DELETE FROM tb_funcionario_x_cargo WHERE funcionario = p_func_id AND cargo = pcargo_id;
 END $$
 DELIMITER ;
+
+-- CRIAR CARGOS DEFAULT
