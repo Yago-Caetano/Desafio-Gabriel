@@ -10,7 +10,9 @@ const RoleParser = require('../parsers/employeeRoleParser');
 routes.post('/',celebrate({
     [Segments.BODY]:Joi.object({
                     name:Joi.string().required(),
-                    description:Joi.string().required()
+                    description:Joi.string().required(),
+                    data:Joi.string().required(),
+                    user:Joi.string().required()
                     })    
             }),async (req,res)=>{
 
@@ -32,7 +34,8 @@ routes.get('user/:userId', async (req,res)=>{
 routes.put('/:roleID',celebrate({
     [Segments.BODY]:Joi.object({
             name:Joi.string().required(),
-            description:Joi.string().required()
+            description:Joi.string().required(),
+            data:Joi.string().required()
                 })    
             }),async (req,res)=>{
 

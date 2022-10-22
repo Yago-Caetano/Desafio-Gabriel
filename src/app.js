@@ -7,6 +7,7 @@ const db = require('./connection/database')
 //rotas
 const userRoutes = require('./routes/employeeRoutes');
 const feedRoutes = require('./routes/feedbackRoutes');
+const rolesRoutes = require('./routes/employeeRolesRouter');
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.set('view engine', 'ejs');
 //routes
 app.use(`/api/v${process.env.API_VERSION}/user`,userRoutes);
 app.use(`/api/v${process.env.API_VERSION}/feedback`,feedRoutes);
+app.use(`/api/v${process.env.API_VERSION}/roles`,rolesRoutes);
+
 
 app.use(express.static(__dirname + "/views"));
 

@@ -35,13 +35,17 @@ function editEmployee(id)
 
 function showFeedBacks(id)
 {
-    sessionStorage.clear();
-    
     sessionStorage.setItem("user-id",id);
-
-
     location.href = "./feedbacks.html";
 }
+
+function showRoles(id)
+{
+    sessionStorage.setItem("user-id",id);
+    location.href = "./roles.html";
+}
+
+
 
 function registerEmployee()
 {
@@ -69,8 +73,16 @@ function createTable(data)
 
 
         let btDel = document.createElement("button");
+        btDel.innerHTML = "Remover";
+
         let btEdit = document.createElement("button");
+        btEdit.innerHTML = "Editar";
+
         let btFeedbcaks = document.createElement("button");
+        btFeedbcaks.innerHTML = "Feedbacks";
+
+        let btEditRole = document.createElement("button");
+        btEditRole.innerHTML = "Cargos";
 
         row.setAttribute("id",element.func_id);
         tdName.innerHTML = element.func_nome;
@@ -86,6 +98,9 @@ function createTable(data)
 
         btFeedbcaks.addEventListener("click",()=>showFeedBacks(element.func_id));
         tdActions.appendChild(btFeedbcaks);
+
+        btEditRole.addEventListener("click",()=>showRoles(element.func_id));
+        tdActions.appendChild(btEditRole);
 
         row.appendChild(tdName);
         row.appendChild(tdTel);

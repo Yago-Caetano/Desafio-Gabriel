@@ -16,6 +16,10 @@ const Role = sequelize.define('Role', {
   cargo_descricao:{
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  cargo_data:{
+    type: DataTypes.DATE,
+    allowNull: false,
   }
 
 }, {

@@ -26,9 +26,13 @@ function save(id,type,action)
         {
             saveEmployee();
         }
-        if(type == FEEDBACK_TYPE)
+        if(type === FEEDBACK_TYPE)
         {
             saveFeedback();       
+        }
+        if(type === ROLE_TYPE)
+        {
+            saveRole();       
         }
     }
 }
@@ -71,6 +75,10 @@ function formCheck()
     else if(sessionStorage.getItem("type") === FEEDBACK_TYPE)
     {
         createFeedbackForm();
+    }
+    else if(sessionStorage.getItem("type") === ROLE_TYPE)
+    {
+        createRolesForm();
     }
 
     createButtons();
@@ -173,6 +181,31 @@ function saveFeedback()
     })
 }
 
+function saveRole()
+{
+    role = {
+        name:`${document.getElementById("roles-name").value}`,
+        description:`${document.getElementById("roles-description").value}`,
+        data:`${document.getElementById("roles-date").value}`,
+        user:`${sessionStorage.getItem("user-id")}`
+    }
+
+    fetch(`${API_LINK}/roles`,{  method: 'POST',headers: {'Content-Type': 'application/json',},body:JSON.stringify(role)}).then(resp=>{
+        if(resp.ok)
+        {
+            alert("Salvo com sucesso!")
+        }
+        else
+        {
+            alert("Falha ao salvar!")
+        }
+        cancel();
+    }).catch(err=>{
+        alert("Falha ao editar!")
+        cancel();
+    })
+
+}
 
 
 function saveEmployee(){
@@ -297,6 +330,7 @@ function fillWithFeedbackData(data)
     ipDate.value = aux.feed_data.split("T")[0]
 }
 
+
 function createFeedbackForm()
 {
     let lbdata = document.createElement("label");
@@ -354,6 +388,42 @@ function createFeedbackForm()
             showInvalidRequest();
         }
     }
+
+}
+
+function createRolesForm()
+{
+    let lbdata = document.createElement("label");
+    lbdata.innerHTML = "Data";
+
+    let ipData = document.createElement("input");
+    ipData.setAttribute("id","roles-date");
+    ipData.setAttribute("type","date");
+
+
+    let lbCargo = document.createElement("label");
+    lbCargo.innerHTML = "Cargo";
+
+    let ipCargo = document.createElement("input");
+    ipCargo.setAttribute("id","roles-name");
+
+
+    let lbDescription = document.createElement("label");
+    lbDescription.innerHTML = "Descrição";
+
+    let ipDescription = document.createElement("input");
+    ipDescription.setAttribute("id","roles-description");
+
+    let form = document.getElementById("form");
+
+    form.appendChild(lbdata);
+    form.appendChild(ipData);
+
+    form.appendChild(lbCargo);
+    form.appendChild(ipCargo);
+
+    form.appendChild(lbDescription);
+    form.appendChild(ipDescription);
 
 }
 
