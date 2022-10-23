@@ -39,12 +39,10 @@ async function getFeedback(req,res,feedId)
 async function getFeedBacks(req,res,userId)
 {
     try
-    {
-        /**
-         * @TODO Implementar SP
-         *  */         
-        const users = await FeedbackDAO.findAll({where:{}});
-        res.status(200).send({users});
+    {       
+         const retUsers = await sequelize.query("CALL proc_get_feed_by_user (:p_func_id )",{replacements:{p_func_id:userId}});
+         console.log(retUsers);
+         res.status(200).send({users:retUsers});
     }
     catch(err){
         res.status(500).send({status:`${err}`})
@@ -68,7 +66,7 @@ async function updateFeedback(req,res,feedId,feedback)
 {
     try{
         await FeedbackDAO.update({
-            feed_data: feedback.data,
+            feed_data: feedback.date,
             feed_metas: feedback.goals,
             feed_pontos_positivos: feedback.successes,
             feed_pontos_negativos: feedback.mistakes
@@ -81,6 +79,7 @@ async function updateFeedback(req,res,feedId,feedback)
     }
     catch(err)
     {
+        console.log(err);
         res.status(500).send({status:`${err}`})
     }
 }

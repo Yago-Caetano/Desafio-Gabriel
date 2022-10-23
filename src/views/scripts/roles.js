@@ -14,10 +14,10 @@ function atributeNewRole(userId)
 
 function deleteRole(id)
 {
-    fetch(`${API_LINK}/role/${id}`,{
+    fetch(`${API_LINK}/roles/${id}`,{
         method:'DELETE'
     }).then(rep=>{
-        alert.show("Removido com sucesso");
+        alert("Removido com sucesso");
         location.reload();
     }).catch(err=>{
         alert("Falha ao remover!!");
@@ -43,15 +43,10 @@ function createTable(data)
         tdDate.innerHTML = element.cargo_data;
         tdDescription.innerHTML = element.cargo_descricao
 
-        btDel.addEventListener("click",()=>deleteRole(element.feed_id));
-        
-        tdActions.appendChild(btDel);
+        btDel.addEventListener("click",()=>deleteRole(element.cargo_id));
+        btDel.innerHTML = "Remover";
 
-        tdActions.appendChild(btEdit);
-        
-        tdActions.appendChild(btEdit);
         tdActions.appendChild(btDel);
-
 
         row.appendChild(tdName);
         row.appendChild(tdDate);
@@ -70,6 +65,13 @@ function loadRoles()
     //get id
     id = sessionStorage.getItem("user-id");
 
+    if(id === null)
+    {
+        //not user was defined, then go back!!
+        history.go(-1);
+        return;
+    }
+    
     console.log("LOAD ROLES");
     fetch(`${API_LINK}/roles/user/${id}`).then(async resp=>{
         data = await resp.json();

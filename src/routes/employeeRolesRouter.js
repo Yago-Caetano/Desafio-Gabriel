@@ -27,7 +27,7 @@ routes.post('/',celebrate({
 //routes.use(authMiddleware.auth);
 
 
-routes.get('user/:userId', async (req,res)=>{
+routes.get('/user/:userId', async (req,res)=>{
     await RoleController.getRoles(req,res,req.params.userId);
 })
 
@@ -45,7 +45,7 @@ routes.put('/:roleID',celebrate({
 })
 
 routes.delete('/:roleID',async (req,res)=>{
-    RoleController.deleteUser(req,res,req.params.roleID);
+    await RoleController.deleteRole(req,res,req.params.roleID);
 })
 
 module.exports = routes;

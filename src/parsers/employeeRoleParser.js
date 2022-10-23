@@ -7,7 +7,7 @@ function parseBody(body)
 
     retRole.name = body.name;
     retRole.description = body.description;
-    retRole.date = body.date;
+    retRole.date = body.data;
     retRole.userId = body.user;
     return retRole;
 

@@ -189,6 +189,7 @@ function saveRole()
         data:`${document.getElementById("roles-date").value}`,
         user:`${sessionStorage.getItem("user-id")}`
     }
+    console.log(role);
 
     fetch(`${API_LINK}/roles`,{  method: 'POST',headers: {'Content-Type': 'application/json',},body:JSON.stringify(role)}).then(resp=>{
         if(resp.ok)
@@ -317,7 +318,7 @@ function loadFeedbackData(id)
 
 function fillWithFeedbackData(data)
 {
-    aux = data.user[0];
+    aux = data.feedback[0];
 
     let ipDate = document.getElementById("feedback-date")
     let ipTargets = document.getElementById("feedback-targets")
