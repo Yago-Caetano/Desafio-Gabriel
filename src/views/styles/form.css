@@ -1,0 +1,16 @@
+
+
+body {
+    background: url('../assets/background-index.png') no-repeat;
+}
+
+.form-funcionario {
+    align-items: center;
+    text-align: center;
+}
+
+
+.titulo-form {
+    text-align: center;
+    color: black;
+}

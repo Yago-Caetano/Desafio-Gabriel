@@ -1,0 +1,42 @@
+body {
+    background: url('../assets/background-index.png') no-repeat;
+}
+
+.titulo-index {
+    text-align: center;
+    color: black;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.btn-custom {
+	color: white;
+	border-radius: 10px;
+	-webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+    text-transform: uppercase;
+    transition: background 0.4s, color 0.4s;
+}
+
+.btn-cadastrar {
+	background: #32CD32;
+    margin: 50px;
+}
+
+.btn-cadastrar:hover {
+	background-color: #006400;
+	color: white;
+}
+
+.funcionarios-lista {
+    margin: 10;
+    padding: 10;
+    text-align: center;
+}
+
+h3 {
+    margin: 10;
+}

@@ -2,23 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./styles/roles.css">
     <title>Cargos</title>
 </head>
 <body>
     <div>
-        <h1>Cargos</h1>
-        <button id="bt-create-role">Atribuir novo cargo</button>
+        <h1 class="titulo-roles">Cargos</h1>
+        <button class="btn btn-custom btn-cadastrar btn-lg" id="bt-create-role">Atribuir novo cargo</button>
         <div id="roles-container">
-            <table id="tb-roles">
-                <tr>
-                    <th>Cargo</th>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                    <th>Ações</th>
-                </tr>
-            </table>
+            <div id="tb-roles" class="row cargos-lista">
+                <div class="col-sm">
+                    <h4>Cargo</h4>
+                </div>
+                <div class="col-sm">
+                    <h4>Data</h4>
+                </div>
+                <div class="col-sm">
+                    <h4>Descrição</h4>
+                </div>
+                <div class="col-sm">
+                    <h4>Nascimento</h4>
+                </div>
+                <div class="col-sm">
+                    <h4>Ações</h4>
+                </div>
+              </div>
         </div>
     </div>
 
