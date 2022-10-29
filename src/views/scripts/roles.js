@@ -39,6 +39,11 @@ function createTable(data)
 
         let btDel = document.createElement("button");
 
+        tdName.setAttribute("class", "form-control");
+        tdDate.setAttribute("class", "form-control");
+        tdDescription.setAttribute("class", "form-control");
+        tdDate.setAttribute("class", "form-control");
+
         tdName.innerHTML = element.cargo;
         tdDate.innerHTML = element.cargo_data;
         tdDescription.innerHTML = element.cargo_descricao
@@ -60,6 +65,7 @@ function createTable(data)
 
         table.appendChild(row);
 
+       
         
 
     });
@@ -82,7 +88,6 @@ function loadRoles()
 function createNewButton()
 {
     document.getElementById("bt-create-role").addEventListener("click",()=>atributeNewRole(sessionStorage.getItem("user-id")))  
-
 }
 
 

@@ -4,13 +4,59 @@ body {
     background: url('../assets/background-index.png') no-repeat;
 }
 
+label {
+    margin-top: 20px;
+}
+
+#form {
+    width: 500px;
+    border: 1px solid black 0.4;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 15px;
+    background-color: darkcyan;
+}
+
 .form-funcionario {
     align-items: center;
     text-align: center;
+    justify-content: center;
+    display: flex;
 }
 
 
 .titulo-form {
     text-align: center;
+    margin-top: 20px;
     color: black;
 }
+
+.btn-custom {
+    color: black;
+	border-radius: 5px;
+    text-transform: uppercase;
+    transition: background 0.4s, color 0.4s;
+}
+
+.btn-cancelar {
+	background: red;
+    margin: 50px;
+}
+
+.btn-salvar {
+	background: greenyellow;
+    margin: 50px;
+    width: 100px;
+}
+
+.btn-cancelar:hover {
+	background-color: gray;
+	color: white;
+}
+
+
+.btn-salvar:hover {
+	background-color: aquamarine;
+	color: white;
+}
+

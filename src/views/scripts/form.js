@@ -49,10 +49,12 @@ function createButtons()
 {
     let buttonSave = document.createElement("button");
     buttonSave.innerHTML = "Salvar"
+    buttonSave.setAttribute("class", "btn-custom btn-salvar")
     buttonSave.addEventListener("click",(e)=>{e.preventDefault();save(sessionStorage.getItem('edit-id'),sessionStorage.getItem('type'),sessionStorage.getItem('action'))})
 
     let buttonCancel = document.createElement("button");
     buttonCancel.innerHTML = "Cancelar";
+    buttonCancel.setAttribute("class", "btn-custom btn-cancelar")
     buttonCancel.addEventListener("click",(e)=>{e.preventDefault();cancel();});
 
     let form = document.getElementById("form")
@@ -257,20 +259,27 @@ function createEmployeeForm()
 
     let ipName = document.createElement("input");
     ipName.setAttribute("id","employee-name");
+    ipName.setAttribute("class", "form-control");
+    ipName.setAttribute("placeholder", "Nome")
 
     let lbTel = document.createElement("label");
     lbTel.innerHTML = "Telefone";
+    
 
     let ipTel = document.createElement("input");
     ipTel.setAttribute("id","employee-tel");
-
+    ipTel.setAttribute("class", "form-control")
+    ipTel.setAttribute("placeholder", "Telefone")
 
     let lbBirth = document.createElement("label");
     lbBirth.innerHTML = "Nascimento";
+    
 
     let ipBirth = document.createElement("input");
     ipBirth.setAttribute("id","employee-birthday");
     ipBirth.setAttribute("type","date");
+    ipBirth.setAttribute("class", "form-control")
+    ipBirth.setAttribute("placeholder", "Data de nascimento")
 
     let form = document.getElementById("form");
 
@@ -339,6 +348,7 @@ function createFeedbackForm()
     let ipData = document.createElement("input");
     ipData.setAttribute("id","feedback-date");
     ipData.setAttribute("type","date");
+    ipData.setAttribute("class", "form-control")
 
 
     let lbMetas = document.createElement("label");
@@ -346,6 +356,8 @@ function createFeedbackForm()
 
     let ipMetas = document.createElement("input");
     ipMetas.setAttribute("id","feedback-targets");
+    ipMetas.setAttribute("class", "form-control");
+    ipMetas.setAttribute("placeholder", "Metas");
 
 
     let lbPositivos = document.createElement("label");
@@ -353,12 +365,16 @@ function createFeedbackForm()
 
     let ipPositivos = document.createElement("input");
     ipPositivos.setAttribute("id","feedback-positivos");
+    ipPositivos.setAttribute("class", "form-control");
+    ipPositivos.setAttribute("placeholder", "Pontos Positivos");
 
     let lbNegativos = document.createElement("label");
     lbNegativos.innerHTML = "Pontos negativos";
 
     let ipNegativos = document.createElement("input");
     ipNegativos.setAttribute("id","feedback-negativos");
+    ipNegativos.setAttribute("class", "form-control");
+    ipNegativos.setAttribute("placeholder", "Pontos Negativos")
 
 
     let form = document.getElementById("form");
@@ -399,6 +415,7 @@ function createRolesForm()
     let ipData = document.createElement("input");
     ipData.setAttribute("id","roles-date");
     ipData.setAttribute("type","date");
+    ipData.setAttribute("class", "form-control")
 
 
     let lbCargo = document.createElement("label");
@@ -406,6 +423,8 @@ function createRolesForm()
 
     let ipCargo = document.createElement("input");
     ipCargo.setAttribute("id","roles-name");
+    ipCargo.setAttribute("placeholder", "Cargo")
+    ipCargo.setAttribute("class", "form-control")
 
 
     let lbDescription = document.createElement("label");
@@ -413,6 +432,8 @@ function createRolesForm()
 
     let ipDescription = document.createElement("input");
     ipDescription.setAttribute("id","roles-description");
+    ipDescription.setAttribute("class", "form-control");
+    ipDescription.setAttribute("placeholder", "Descrição")
 
     let form = document.getElementById("form");
 
