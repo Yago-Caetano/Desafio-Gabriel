@@ -34,13 +34,21 @@ abaixo é apresentado um exemplo
 DATABASE_HOST = 'localhost'
 DATABASE_USER = 'user'
 DATABASE_PASS = 'psw'
-DATABASE_SCHEMA = 'mSchema'
+DATABASE_SCHEMA = 'db_desafio'
 DATABASE_PORT = 3306
 PORT = '3333'
 API_VERSION = 1
 
 ```
 
-## Documentação da API
+## Acessando a aplicação
 
-A documentação da API foi feita utilizando o swagger e pode ser encontrada [aqui](./docs/api_swagger.yaml)
+Para acessar o aplicativo, basta abrir o navegador no endereço abaixo:
+
+```
+    localhost:{Porta definida no arquivo ".env"}
+```
+
+## Link do video
+
+E possivel ver o video [aqui](youtube.com)
