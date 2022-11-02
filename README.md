@@ -41,6 +41,12 @@ API_VERSION = 1
 
 ```
 
+### Configuracao banco de dados
+
+O script para a criação do banco de dados encontra-se [aqui](./sql/db_desafio.sql)
+
+
+
 ## Acessando a aplicação
 
 Para acessar o aplicativo, basta abrir o navegador no endereço abaixo:
